@@ -6,7 +6,7 @@ import { Playlist } from '../Playlist/Playlist';
 
 import { trackSearchTestData } from './trackSearchTestData';
 import { PlaylistFull } from './playlistTestData';
-
+import { Spotify } from '../../Util/Spotify';
 
 
 class App extends React.Component {
@@ -16,6 +16,7 @@ class App extends React.Component {
     this.state = {
       searchResults : trackSearchTestData,
       playlist: PlaylistFull,
+      userAccessToken: ""
     };
 
     this.search=this.search.bind(this);
@@ -23,6 +24,7 @@ class App extends React.Component {
     this.removeTrack=this.removeTrack.bind(this);
     this.updatePlaylistName=this.updatePlaylistName.bind(this);
     this.savePlaylist=this.savePlaylist.bind(this);
+    this.handleTestClick=this.handleTestClick.bind(this);
   }
 
   search(searchTerm) {
@@ -54,6 +56,13 @@ class App extends React.Component {
     console.log(trackURIS);
   }
 
+
+  handleTestClick() {
+    this.setState ({
+      userAccessToken: Spotify.getAccessToken()
+    })
+  }
+
   render () {
     return (
       <div>
@@ -65,6 +74,7 @@ class App extends React.Component {
             <Playlist playlistName={this.state.playlist.name} playlistTracks={this.state.playlist.tracks.items} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist}/>
           </div>
         </div>
+        <button onClick={this.handleTestClick}> TEST </button>
       </div>
     )
   }

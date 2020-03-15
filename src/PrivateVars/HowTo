@@ -1,0 +1,3 @@
+Add a file "keys.js" to your local project with your API keys identified as below:
+
+export const clientID = "";

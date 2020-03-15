@@ -24,3 +24,6 @@ yarn-error.log*
 
 # archive
 /archive
+
+# Private Variables
+/src/PrivateVars/keys.js
