@@ -4,6 +4,7 @@ const Data1 = {
     },
     artists: [{name: 'Thutmose'}, {name: 'NoMBe'}],
     id: '1234567890',
+    uri: 'spotify:track:1234567890',
     name: 'Run Wild - Original'
 };
 
@@ -13,6 +14,7 @@ const Data2 = {
     },
     artists: [{name: 'ReauBeau'}, {name: 'Kay Slice'}],
     id: '1234567891',
+    uri: 'spotify:track:1234567891',
     name: 'Lately'
 };
 
@@ -22,6 +24,7 @@ const Data3 = {
     },
     artists: [{name: 'GRiZ'}, {name: 'Big Gigantic'}],
     id: '1234567892',
+    uri: 'spotify:track:1234567892',
     name: 'Good Times Roll'
 };
 
