@@ -6,7 +6,7 @@ import { Playlist } from '../Playlist/Playlist';
 
 import { trackSearchTestData } from './trackSearchTestData';
 import { PlaylistFull } from './playlistTestData';
-import { Spotify } from '../../Util/Spotify';
+import Spotify from '../../Util/Spotify';
 
 
 class App extends React.Component {
@@ -58,9 +58,10 @@ class App extends React.Component {
 
 
   handleTestClick() {
-    this.setState ({
-      userAccessToken: Spotify.getAccessToken()
-    })
+    // this.setState ({
+    //   userAccessToken: Spotify.getAccessToken()
+    // })
+    console.log(Spotify.getAccessToken());
   }
 
   render () {
