@@ -45,7 +45,7 @@ export default Spotify
 
 
         // Check if userAccessToken exists -- Commented out, see comment below
-        // ======= WHY? The variable userAccessToken gets reset every time you call this.  This will never run???? =========
+        // ======= WHY? The variable userAccessToken is renitialized every time you call this.  This will never run???? =========
         // if (userAccessToken) {
         //     return userAccessToken;
         // }
