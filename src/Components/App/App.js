@@ -14,7 +14,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      searchResults : trackSearchTestData,
+      searchResults : "",
       playlist: PlaylistFull,
       userAccessToken: ""
     };
@@ -27,8 +27,11 @@ class App extends React.Component {
     this.handleTestClick=this.handleTestClick.bind(this);
   }
 
-  search(searchTerm) {
-    console.log(`Performing serach for ${searchTerm}.`)
+  async search(searchTerm) {
+    // Asynchronous call made to Spotify.search since it returns a Promise and we want to ensure the final value is passed on to the Tracklist
+    this.setState({
+      searchResults: await Spotify.search(searchTerm)
+    });
   }
 
   addTrack(track) {
@@ -57,12 +60,12 @@ class App extends React.Component {
   }
 
 
-  handleTestClick() {
-    // this.setState ({
-    //   userAccessToken: Spotify.getAccessToken()
-    // })
-    console.log(Spotify.getAccessToken());
-  }
+  // handleTestClick() {
+  //   // this.setState ({
+  //   //   userAccessToken: Spotify.getAccessToken()
+  //   // })
+  //   console.log(Spotify.getAccessToken());
+  // }
 
   render () {
     return (
@@ -75,10 +78,14 @@ class App extends React.Component {
             <Playlist playlistName={this.state.playlist.name} playlistTracks={this.state.playlist.tracks.items} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist}/>
           </div>
         </div>
-        <button onClick={this.handleTestClick}> TEST </button>
+
       </div>
     )
   }
 }
 
 export default App;
+
+
+// Storage for removed testing button in case a new need comes up
+/* <button onClick={this.handleTestClick}> TEST </button> */

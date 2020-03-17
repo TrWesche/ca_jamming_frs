@@ -5,7 +5,7 @@ import { Track } from '../Track/Track';
 // Always check that the variables are ready to be used or React will throw a stupid error that is non-descript and hard to figure out.....
 
 export class TrackList extends React.Component {
-    render () {
+    render () { 
         if (this.props.tracks) {
             return (
                 <div className="TrackList">
@@ -17,7 +17,7 @@ export class TrackList extends React.Component {
                 </div>
             );
         }
-        return <h3>Loading</h3>
+        return <h3>Results of your search will appear here...</h3>
     }
 }
 
