@@ -4,8 +4,8 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import { SearchResults } from '../SearchResults/SearchResults';
 import { Playlist } from '../Playlist/Playlist';
 
-import { trackSearchTestData } from './trackSearchTestData';
-import { PlaylistFull } from './playlistTestData';
+// import { trackSearchTestData } from './trackSearchTestData';
+// import { PlaylistFull } from './playlistTestData';
 import Spotify from '../../Util/Spotify';
 
 
@@ -61,13 +61,17 @@ class App extends React.Component {
     })
   }
 
-  savePlaylist() {
+  async savePlaylist() {
     const trackURIS = [];
     this.state.playlist.forEach(track => {
       trackURIS.push(track.uri);
-    })
-    Spotify.savePlaylist(this.state.playlistName, trackURIS)
-
+    });
+    await Spotify.savePlaylist(this.state.playlistName, trackURIS);
+    alert("Your playlist has been saved!")
+    this.setState({
+      playlist: [],
+      playlistName: "New Playlist"
+    });
   }
 
 
@@ -86,7 +90,7 @@ class App extends React.Component {
           <SearchBar onSearch={this.search} />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
-            <Playlist playlistName={this.state.playlist.name} playlistTracks={this.state.playlist} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist}/>
+            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlist} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist}/>
           </div>
         </div>
 
