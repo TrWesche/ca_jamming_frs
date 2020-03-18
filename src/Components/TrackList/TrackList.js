@@ -6,6 +6,8 @@ import { Track } from '../Track/Track';
 
 export class TrackList extends React.Component {
     render () { 
+        // console.log("01: Tracklist render has recieved:");
+        // console.log(this.props.tracks);
         if (this.props.tracks) {
             return (
                 <div className="TrackList">
@@ -17,7 +19,7 @@ export class TrackList extends React.Component {
                 </div>
             );
         }
-        return <h3>Results of your search will appear here...</h3>
+        return <h3></h3>
     }
 }
 

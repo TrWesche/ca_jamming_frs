@@ -14,6 +14,8 @@ export class Playlist extends React.Component {
     }
 
     render() {
+        // console.log('0001: Playlist render has recevied the value:');
+        // console.log(this.props.playlistTracks);
         return (
             <div className="Playlist">
                 <input defaultValue="New Playlist" onChange={this.handleNameChange}/>

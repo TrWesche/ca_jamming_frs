@@ -1,6 +1,6 @@
 import { clientID } from '../PrivateVars/keys';
 
-const headers = {
+let headers = {
     Authorization: ""
 };
 
@@ -16,15 +16,26 @@ const Spotify = {
         userAccessToken: "",
         expires_in:      0,
 
+        // User Information
+        userID:         "",
+        userURI:        "",
+
         // Request Variables
         stateOut:       -1,
         stateIn:        0,
         token_type:     "",
 
+        // ---------- Variables API --------------
+        urlAddrAPI:  "https://api.spotify.com/v1/",
+
         // ---------- Variables Search API --------------
-        urlAddrSearch:  "https://api.spotify.com/v1/search",
         market: "from_token",
 
+        // ---------- Variables Playlist API --------------
+        playlistID:     "",
+        playlistURI:    "",
+
+        // ---------- Variables Authorization API --------------
         Authorization: ""
     },
 
@@ -64,9 +75,10 @@ const Spotify = {
         else {
             // Check to make sure the user is passing in some sort of query value.
             if (userQuery) {
-                let searchURL = `${this.props.urlAddrSearch}?q=${userQuery}&type=${searchType}&market=${this.props.market}&limit=${limit}`;
-                this.props.Authorization = `Bearer ${this.props.userAccessToken}`;
-                headers.Authorization = this.props.Authorization;
+                let searchURL = `${this.props.urlAddrAPI}search?q=${userQuery}&type=${searchType}&market=${this.props.market}&limit=${limit}`;
+                headers = {
+                    Authorization: `Bearer ${this.props.userAccessToken}`
+                };
                 return await fetch(searchURL, {headers})
                     .then(response => response.json())
                     .then(jsonResponse => {
@@ -80,8 +92,118 @@ const Spotify = {
                     });
                 }
             }
-    }
+    },
 
+    savePlaylist: async function(playlistName, tracks, playlistPublic=true, collaborative=false, description="Imported from Jammming") {
+        // If playlist creation attempt without login, call login function
+        if (!this.props.userAccessToken) {
+            this.getAccessToken();
+        } else {
+            // Step 1 = Update the Authorization variable
+            headers = {
+                Authorization: `Bearer ${this.props.userAccessToken}`
+            };
+            let queryURL;
+
+            // Step 2= Get user ID
+            queryURL = `${this.props.urlAddrAPI}me`;
+            await fetch(queryURL, {headers})
+            .then(response => response.json())
+            .then(jsonResponse => {
+                this.props.userID = jsonResponse.id;
+                this.props.userURI = jsonResponse.uri})
+
+            if (this.props.userID) {
+                // Step 3= Create Playlist
+                queryURL = `${this.props.urlAddrAPI}users/${this.props.userID}/playlists`;
+                await fetch(queryURL, {
+                    method: 'post',
+                    headers: {
+                        Authorization: `Bearer ${this.props.userAccessToken}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: playlistName,
+                        public: playlistPublic,
+                        collaborative: collaborative,
+                        description: description
+                    })
+                })
+                .then(response => response.json())
+                .then(jsonResponse => {
+                    console.log(jsonResponse);
+                    this.props.playlistID = jsonResponse.id;
+                    this.props.playlistURI = jsonResponse.uri;
+                })
+            } else {
+                alert("Unable to resolve userID.")
+            };
+
+
+            // Step 4= Add Tracks to Playlist
+            if (this.props.playlistID) {
+                this.addPlaylistTrack(tracks, this.props.playlistID);
+            } else {
+                alert("Unable to resolve playlistID")
+            }
+        }            
+    },
+
+    addPlaylistTrack: async function(tracks = [], playlistID) {
+        // If playlist creation attempt without login, call login function
+        if (!this.props.userAccessToken) {
+            this.getAccessToken();
+        } 
+        // Otherwise commit tracks to the playlist
+        else {
+            let uris;
+            const maxUris = 100;
+            let queryURL = "";
+
+            if (tracks.length > maxUris) {
+                let qtyIterations = Math.ceil(tracks.length()/40);
+                let trksArrStart = 0;
+                let trksArrEnd = 0;
+                let processingArray = [];
+
+                for (let i = 0; i < qtyIterations; i++) {
+                    trksArrStart = trksArrEnd;
+                    trksArrEnd = trksArrEnd + maxUris;
+                    if (trksArrEnd > tracks.length) {
+                        trksArrEnd = tracks.length;
+                    };
+                    processingArray = tracks.slice(trksArrStart,trksArrEnd);
+                    uris = JSON.stringify(processingArray);
+                    queryURL = `${this.props.urlAddrAPI}playlists/${playlistID}/tracks`;
+                    await fetch(queryURL, 
+                        {
+                            method: 'post',
+                            headers: {
+                                Authorization: `Bearer ${this.props.userAccessToken}`,
+                                "Content-Type": "application/json"
+                            },
+                            body: uris
+                        })
+                    .then(response => response.json());
+                }
+            } else {
+                uris = JSON.stringify(tracks);
+                queryURL = `${this.props.urlAddrAPI}playlists/${playlistID}/tracks`;
+                await fetch(queryURL, 
+                    {
+                        method: 'post',
+                        headers: {
+                            Authorization: `Bearer ${this.props.userAccessToken}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: uris
+                    })
+                .then(response => {
+                    return response.json()});
+            }
+            
+        }
+    }
 }
 
 export default Spotify
