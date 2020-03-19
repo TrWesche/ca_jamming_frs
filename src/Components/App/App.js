@@ -2,7 +2,9 @@ import React from 'react';
 import './App.css';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { SearchResults } from '../SearchResults/SearchResults';
-import { Playlist } from '../Playlist/Playlist';
+import { PlaylistControl } from '../PlaylistControl/PlaylistControl';
+import { PlaylistBrowse } from '../PlaylistBrowse/PlaylistBrowse';
+import { PlaylistTracks } from '../PlaylistTracks/PlaylistTracks';
 
 // import { trackSearchTestData } from './trackSearchTestData';
 // import { PlaylistFull } from './playlistTestData';
@@ -87,10 +89,18 @@ class App extends React.Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar onSearch={this.search} />
-          <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
-            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlist} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist}/>
+          <div className="App-funcareas">
+            <div className="App-playlist">
+              <PlaylistControl playlistName={this.state.playlistName} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist}/>
+              <div className="App-playlistbrowser">
+                <PlaylistBrowse />
+                <PlaylistTracks playlistTracks={this.state.playlist} onRemove={this.removeTrack} />
+              </div>
+            </div>
+            <div className="App-searcharea">
+              <SearchBar onSearch={this.search} />
+              <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
+            </div>
           </div>
         </div>
 

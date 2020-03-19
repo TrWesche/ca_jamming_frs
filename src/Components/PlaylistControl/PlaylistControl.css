@@ -1,0 +1,83 @@
+.PlaylistControl {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  /* overflow-y: scroll; */
+  width: 94%;
+  /* max-height: 950px; */
+  /* padding: 2.27rem 1.16rem; */
+  padding: 2%;
+  background-color: rgba(92, 104, 155, 0.2);
+  /* box-shadow: 0 4px 2px 2px #000000; */
+  margin-top: 1%;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.PlaylistControl h2 {
+  min-width: 29%;
+}
+
+.PlaylistControl input {
+  height: 2rem;
+  width: 58%;
+  border: 0;
+  border-left: 1px solid #fff;
+  padding-left: 2%;
+  outline: 0;
+  background: transparent;
+  /* border-bottom: 1px solid #6f6f6f; Will need to use this as an "available for entry" indicator*/
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.55rem;
+  color: #fff;
+}
+
+.Playlist-action {
+  min-width: 2rem;
+  min-height: 2rem;
+  text-align: center;
+  margin-right: 2%;
+  /* border: 1px solid #fff; */
+  border-radius: 50%;
+  cursor: pointer;
+  /* padding: .5rem; */
+  font-size: 1.05rem;
+  transition: color .25s;
+  border: 0px;
+  background-color: #6c41ec;
+  color: #fff;
+}
+
+.Playlist-save {
+  cursor: pointer;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: .25rem 0;
+  border-radius: 50%;
+  border-width: 0px;
+  background-image: url("./save-as-64.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: 1rem;
+  background-color: #6c41ec;
+  text-align: center;
+  font-size: .83rem;
+  transition: background-color .25s;
+  color: #fff;
+  font-weight: 500;
+}
+
+.Playlist-save:hover {
+  background-color: rgba(108, 65, 233, .7);
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+@media only screen and (max-width: 1020px) {
+  .PlaylistControl {
+    width: 90%;
+  }
+}
