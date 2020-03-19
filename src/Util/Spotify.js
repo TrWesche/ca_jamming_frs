@@ -12,6 +12,7 @@ const Spotify = {
         urlAddrUAT:     "https://accounts.spotify.com/authorize",
         response_type:  "token",
         redirect_uri:   "http:%2F%2Flocalhost:3000%2F",
+        // redirect_uri:   "http:%2F%2Ftw_codecademy_jamming.surge.sh",
         scope:          "playlist-modify-public user-read-private",
         userAccessToken: "",
         expires_in:      0,
