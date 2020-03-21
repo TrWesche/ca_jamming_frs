@@ -1,28 +1,52 @@
 .PlaylistControl {
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
-  /* overflow-y: scroll; */
   width: 94%;
-  /* max-height: 950px; */
-  /* padding: 2.27rem 1.16rem; */
   padding: 2%;
   background-color: rgba(92, 104, 155, 0.2);
-  /* box-shadow: 0 4px 2px 2px #000000; */
   margin-top: 1%;
-  justify-content: space-between;
-  flex-wrap: nowrap;
+}
+
+.PlaylistHeading {
+  display: flex;
+  width: 35%;
 }
 
 .PlaylistControl h2 {
-  min-width: 29%;
+  display: flex;
+  justify-content: left;
+  width: 85%;
+}
+
+.Playlist-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 1.25rem;
+  min-height: 1.25rem;
+  margin-right: 2%;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color .5s;
+  border: 0px;
+  background-color: #6c41ec00;
+  color: #fff;
+}
+
+.TracklistHeading{
+  display: flex;
+  width: 65%;
+  justify-content: space-between;
 }
 
 .PlaylistControl input {
+  display: flex;
+  max-width: 85%;
+  flex-shrink: 2;
   height: 2rem;
-  width: 58%;
   border: 0;
-  border-left: 1px solid #fff;
+  /* border-left: 1px solid #fff; */
   padding-left: 2%;
   outline: 0;
   background: transparent;
@@ -30,25 +54,11 @@
   font-family: 'Poppins', sans-serif;
   font-size: 1.55rem;
   color: #fff;
-}
-
-.Playlist-action {
-  min-width: 2rem;
-  min-height: 2rem;
-  text-align: center;
-  margin-right: 2%;
-  /* border: 1px solid #fff; */
-  border-radius: 50%;
-  cursor: pointer;
-  /* padding: .5rem; */
-  font-size: 1.05rem;
-  transition: color .25s;
-  border: 0px;
-  background-color: #6c41ec;
-  color: #fff;
+  box-sizing: border-box;
 }
 
 .Playlist-save {
+  display: flex;
   cursor: pointer;
   min-width: 2rem;
   min-height: 2rem;
@@ -59,12 +69,60 @@
   background-repeat: no-repeat;
   background-position: 50%;
   background-size: 1rem;
-  background-color: #6c41ec;
+  background-color: #6c41ec00;
   text-align: center;
   font-size: .83rem;
-  transition: background-color .25s;
+  transition: background-color .5s;
   color: #fff;
   font-weight: 500;
+  
+}
+
+.tooltip {
+  display: flex;
+  position: relative;
+}
+
+.ttText-add {
+  visibility: hidden;
+  position: absolute;
+  top: 1.8rem;
+  left: 0.5rem;
+  z-index: 5;
+  color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color .5s, color .5s;
+  padding: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.ttText-save {
+  visibility: hidden;
+  position: absolute;
+  top: 2.35rem;
+  left: 0.5rem;
+  z-index: 5;
+  color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color .5s, color .5s;
+  padding: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.Playlist-add:hover{
+  background-color: rgba(108, 65, 233, .7);
+}
+
+.tooltip:hover .ttText-add{
+  visibility: visible;
+  color: #fff;
+  background-color: rgba(78, 39, 194, 0.5);
+}
+
+.tooltip:hover .ttText-save{
+  /* visibility: visible; */
+  color: #fff;
+  background-color: rgba(78, 39, 194, 0.5);
 }
 
 .Playlist-save:hover {

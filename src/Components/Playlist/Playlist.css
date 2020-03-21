@@ -1,0 +1,45 @@
+.Playlist {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    /* align-content: center; */
+    justify-content: left;
+    background-color: rgba(255,255,255,0.1);
+    /* border-bottom: 1px solid rgba(256,256,256,0.8); */
+    margin-bottom: 0.2rem;
+    transition: background-color 0.5s;
+    padding: 0.2rem;
+}
+
+.AlbumArt {
+    display: flex;
+    margin-right: 0.5rem;
+    /* max-width: 20%; */
+    height: auto;
+    /* justify-content: left; */
+}
+
+.AlbumArt img {
+    object-fit: contain;
+    background-color: indigo;
+    width: 2rem;
+    /* max-width: 20%; */
+}
+
+.Playlist-Info {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.PlayList-Info h3 {
+    font-size: 1.15rem;
+}
+
+.PlayList-Info p {
+    font-size: 0.5rem;
+}
+
+.Playlist:hover {
+    background-color: rgba(151, 41, 124, 0.4);
+}
