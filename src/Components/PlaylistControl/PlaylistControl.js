@@ -30,6 +30,8 @@ export class PlaylistControl extends React.Component {
             disablePLSave: false,
             showSaveBtn: "visible"
         });
+
+        this.props.setPlaylistTracks("New Playlist");
     }
 
     handlePlaylistSave(event) {

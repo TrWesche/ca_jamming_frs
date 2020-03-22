@@ -26,6 +26,29 @@ h2 {
   font-size: 1.55rem;
 }
 
+.App-login {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.Button-login {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  margin-top: 2rem;
+  align-items: center;
+  justify-content: center;
+  min-width: 6rem;
+  padding: 0.2rem;
+  border: 0;
+  border-radius: 0.25rem;
+  background-color: rgba(151, 41, 124, 0.8);
+  color: #FFF;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
 .App {
   height: 100%;
   padding: 0 17% 10% 17%;
@@ -71,6 +94,10 @@ h2 {
   background-color: rgba(1, 12, 63, 0.7);
   box-shadow: 0 4px 2px 2px #000000;
   align-items: center;
+}
+
+.Button-login:hover {
+  background-color: rgba(151, 41, 124, 0.4);
 }
 
 @media only screen and (max-width: 1020px) {

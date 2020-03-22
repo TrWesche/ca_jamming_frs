@@ -181,6 +181,35 @@ const Spotify = {
         }      
     },
 
+    getPlaylistTracks: async function (playlistURI="", limit=100, offset=0) {
+        // If when retrieving playlists the user has not logged in, alert them that login is required
+        if (!this.props.userAccessToken) {
+            alert("Please login to continue")
+        } else {
+            // Step 1 = Update the Authorization variable
+            headers = {
+                Authorization: `Bearer ${this.props.userAccessToken}`
+            };
+
+            if (playlistURI !== "") {
+                let queryURL = `${playlistURI}?limit=${limit}&offset=${offset}`;
+                return await fetch(queryURL, {
+                    method: 'get',
+                    headers: {
+                        Authorization: `Bearer ${this.props.userAccessToken}`,
+                    }
+                })
+                .then(response => response.json())
+                .then(jsonResponse => {
+                    console.log(jsonResponse);
+                    return jsonResponse.items;
+                })
+            } else {
+                alert("Playlist URI not available")
+            };
+        }     
+    },
+
     addPlaylistTrack: async function(tracks=[], playlistID) {
         // If playlist creation attempt without login, call login function
         if (!this.props.userAccessToken) {

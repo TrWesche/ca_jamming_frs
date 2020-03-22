@@ -9,7 +9,7 @@ export class PlaylistBrowse extends React.Component {
                 <div className="PlaylistBrowse">            
                     {
                         this.props.userPlaylists.map(playlist => 
-                            <Playlist playlist={playlist} key={playlist.id} /> )
+                            <Playlist playlist={playlist} key={playlist.id} playlistSelect={this.props.setPlaylistTracks}/> )
                     }
                 </div> 
             )

@@ -19,7 +19,8 @@ class App extends React.Component {
       searchResults : [],
       userPlaylists: [],
       playlist: [],
-      playlistName: "New Playlist",
+      playlistName: "",
+      playlistURI: "",
       userAccessToken: ""
     };
 
@@ -29,18 +30,41 @@ class App extends React.Component {
     this.updatePlaylistName=this.updatePlaylistName.bind(this);
     this.savePlaylist=this.savePlaylist.bind(this);
     this.getPlaylists=this.getPlaylists.bind(this);
+    this.setPlaylistTracks=this.setPlaylistTracks.bind(this);
     // this.handleTestClick=this.handleTestClick.bind(this);
   }
 
   async getPlaylists(limit, offset) {
     let playlistsRetrieved = await Spotify.getUserPlaylists();
-    console.log("Value stored to playlists Retrieved variable");
-    console.log(playlistsRetrieved);
+    // console.log("Value stored to playlists Retrieved variable");
+    // console.log(playlistsRetrieved);
     this.setState({
       userPlaylists: playlistsRetrieved
     });
-    console.log("Value stored to state variable");
-    console.log(this.state.userPlaylists);
+    // console.log("Value stored to state variable");
+    // console.log(this.state.userPlaylists);
+  }
+
+  async setPlaylistTracks(playlistURI="", playlistName = "New Playlist") {
+    if(playlistURI === "New Playlist" || playlistURI === "") {
+      this.updatePlaylistName(playlistName);
+      this.setState({
+        playlist: []
+      })
+    } else {
+      let playlistTrkList = await Spotify.getPlaylistTracks(playlistURI);
+      // console.log(playlistTrkList);
+      let tempTrkList = []
+      playlistTrkList.forEach(element => {
+        tempTrkList.push(element.track)
+      });
+      // console.log(tempTrkList);
+      this.updatePlaylistName(playlistName);
+      this.setState({
+        playlist: tempTrkList,
+        playlistURI: playlistURI
+      })
+    }
   }
 
   async search(searchTerm) {
@@ -96,25 +120,28 @@ class App extends React.Component {
   }
 
 
-  async handleTestClick() {
-    // this.setState ({
-    //   userAccessToken: Spotify.getAccessToken()
-    // })
-    let returnVal = await Spotify.getUserPlaylists();
-    console.log(returnVal);
-    // console.log(Spotify.getUserPlaylists());
-  }
+  // async handleTestClick() {
+  //   // this.setState ({
+  //   //   userAccessToken: Spotify.getAccessToken()
+  //   // })
+  //   let returnVal = await Spotify.getUserPlaylists();
+  //   console.log(returnVal);
+  //   // console.log(Spotify.getUserPlaylists());
+  // }
 
   render () {
     return (
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
+          <div className="App-login">
+            <button className="Button-login" onClick={this.getPlaylists}> Login </button>
+          </div>
           <div className="App-funcareas">
             <div className="App-playlist">
-              <PlaylistControl playlistName={this.state.playlistName} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist} />
+              <PlaylistControl playlistName={this.state.playlistName} setPlaylistTracks={this.setPlaylistTracks} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist} />
               <div className="App-playlistbrowser">
-                <PlaylistBrowse userPlaylists={this.state.userPlaylists} />
+                <PlaylistBrowse userPlaylists={this.state.userPlaylists} setPlaylistTracks={this.setPlaylistTracks} />
                 <PlaylistTracks playlistTracks={this.state.playlist} onRemove={this.removeTrack} />
               </div>
             </div>
@@ -124,7 +151,6 @@ class App extends React.Component {
             </div>
           </div>
         </div>
-        <button onClick={this.getPlaylists}> TEST </button>
       </div>
     )
   }
